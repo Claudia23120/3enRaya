@@ -46,7 +46,8 @@ h1{
     display: flex;
     justify-content: center;
     flex-direction: row;
-    gap: 60px;
+    gap: 40px;
+    align-items: center;
 }
 .divT{
     padding: 1.5rem 1.5rem;
@@ -98,4 +99,9 @@ h1{
 #canviarTorn{
     padding: 0.8rem 1.5rem;
     margin-left: 30px;
+}
+
+.font{
+    font-size: xx-large;
+
 }
