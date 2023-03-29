@@ -9,16 +9,29 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="alertInici" id="alert">
+    <div class="alerts alertInici" id="alert">
         <div class="alertInici__bloc">
-            <div class="color">
+            <div class="caixaAlert color">
                 <button id="JM" class="botons">Jugador - Maquina</button>
                 <button id="JJ" class="botons">Jugador - Jugador</button>
             </div>
         </div>
     </div>
 
+    <div class="alerts divGuanyador hidden" id="guanyar">
+        <div class="divGuanyador_bloc">
+            <div class="caixaAlert color2">
+                <p>Ha guanyat X</p>
+                <div>
+                    <button id="change">Canviar torns</button>
+                    <button id="tornaJugar">TORNAR A JUGAR</button>
+                </div>
+                
+            </div>
+            
+        </div>
 
+    </div>
 <br><br>
     <button id="canviarTorn">Canviar torns</button>
     <h1>3 en raya</h1><br><br>
@@ -42,7 +55,7 @@
             <div class="divT" id="J1">Jugador 1</div>
             <p class="font" id="numJ1">0</p>
             <p>-</p>
-            <p class="font" id="num2">0</p>
+            <p class="font" id="numJ2">0</p>
             <div class="divT desActiu" id="J2">Jugador 2</div>
         </div>
     </div>

@@ -5,8 +5,8 @@
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 .tauler{
-    width: 500px;
-    height: 500px;
+    width: 29rem;
+    height: 29rem;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
@@ -66,13 +66,15 @@ h1{
     color:rgb(128, 128, 128) ;
     background-color: rgb(169, 169, 169) !important;
 }
-
-.alertInici{
+.alerts{
     position: absolute;
     height: 100vh;
     width: 100%;
     z-index: 1;
+}
+.alertInici{
     background-color: rgba(193, 193, 193, 0.849);
+    overflow: hidden;
 }
 .alertInici__bloc{
     height: 100vh;
@@ -81,12 +83,9 @@ h1{
     align-items: center;
 }
 .color{
-    display: flex;
-    gap: 30px;
-    padding: 5rem ;
     background-color: rgb(0, 174, 116);
 }
-.color>button{
+.color>button {
     height: 8vh;
     padding: 1.5rem 2.5rem;
     font-size: 1rem;
@@ -103,5 +102,28 @@ h1{
 
 .font{
     font-size: xx-large;
-
+}
+.divGuanyador{
+    background-color: rgba(0, 255, 255, 0.215);
+}
+.divGuanyador_bloc{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.caixaAlert{
+    display: flex;
+    gap: 2rem;
+    padding: 5rem;
+}
+.color2{
+    flex-direction: column;
+    background-color: royalblue;
+}
+.color2>div>button{
+    flex-direction: row;
+    padding: 0.5rem 1.5rem;
+    font-size: 0.8rem;
+    font-weight: bold;
 }
