@@ -3,12 +3,23 @@ let tornJugador = 'J1';
 let tauler = [['', '', ''], ['', '', ''], ['', '', '']];
 let jugador2;
 let torn = 0;
+let J1 = document.querySelector('#J1')
+let J2 = document.querySelector('#J2')
+let divGuanyar = document.querySelector('#guanyar')
+let tornActual = 'jugador'
 
+//Funcio cada cop que es pica el boto canviar torn
 document.querySelectorAll('.botons').forEach((x) => {
   x.onclick = function () {
     jugador2 = x.id == 'JJ';
-    document.getElementById('J2').innerText = !jugador2 ? 'Màquina' : 'Jugador 2';
+
+    J2.innerText = !jugador2 ? 'Màquina' : 'Jugador 2';
+    J1.innerText = !jugador2 ? 'You' : 'Jugador 1';
+
     document.getElementById('alert').classList.add('hidden');
+    document.getElementById('numJ1').innerText = '0';
+    document.getElementById('numJ2').innerText = '0';
+
     carregar();
   };
 });
@@ -19,23 +30,32 @@ cuadrats.forEach((boto) => {
       const posicio = boto.id;
       const guanyat = guardarPosicio(posicio);
       if (guanyat == 'full') {
-        alert('EMPATE');
-        carregar();
+        setTimeout(()=>{
+          divGuanyar.classList.remove('hidden')
+          divGuanyar.querySelector('p').textContent = 'EMPAT!'
+        },300)
       } else if (guanyat) {
-        alert(`${tornJugador} amb fitxes ${boto.textContent} HA GUANYAT`);
-        carregar();
-      }
-      if (jugador2) tornJugador = tornJugador == 'J1' ? 'J2' : 'J1';
-      else {
+        const nom = `num${tornJugador}`
+        const number = document.getElementById(nom).textContent
+        document.getElementById(nom).innerText = Number(number)+1;
         setTimeout(() => {
-          tornMaquina();
-          tornJugador = 'J1';
-          document.getElementById('J1').classList.toggle('desActiu');
-          document.getElementById('J2').classList.toggle('desActiu');
-        }, 300);
+          divGuanyar.classList.remove('hidden')
+          divGuanyar.querySelector('p').textContent = `${tornJugador} amb fitxes ${boto.textContent} HA GUANYAT`
+        }, 600);
+      }else{
+        if (jugador2) tornJugador = tornJugador == 'J1' ? 'J2' : 'J1';
+        else {
+          setTimeout(() => {
+            tornMaquina();
+            
+            tornJugador = 'J1';
+            J1.classList.toggle('desActiu');
+            J2.classList.toggle('desActiu');
+          }, 300);
+        }
+        J1.classList.toggle('desActiu');
+        J2.classList.toggle('desActiu');
       }
-      document.getElementById('J1').classList.toggle('desActiu');
-      document.getElementById('J2').classList.toggle('desActiu');
     }
   };
 });
@@ -44,6 +64,8 @@ function carregar() {
   tauler = [['', '', ''], ['', '', ''], ['', '', '']];
   cuadrats.forEach((boto) => { boto.textContent = ''; });
   torn = 0;
+  J1.classList.remove('desActiu');
+  J2.classList.add('desActiu');
 }
 
 function guardarPosicio(posicio) {
@@ -51,7 +73,6 @@ function guardarPosicio(posicio) {
   posicio = posicio.split('/');
   botonet.innerHTML = tornJugador == 'J1' ? '<p>X</p>' : '<p>O</p>';
   tauler[posicio[0]][posicio[1]] = botonet.textContent;
-  console.log(tauler);
   return comprovarGeneral();
 }
 
@@ -88,7 +109,6 @@ function comprovarDiagonal() {
 
 function tornMaquina() {
   tornJugador = 'J2';
-  console.log(torn);
   if (torn == 0) tornZMaquina();
   else torn1Maquina();
 }
@@ -146,22 +166,27 @@ function torn1Maquina() {
       // CONTROL DIAGONAL
       const posD = controlGuanyarDiagonal('X');
       if (posD !== 'seguent') acabat = guardarPosicio(posD);
-      else { // TODO: Ficar en posicio random
+      else if(comprovarGeneral() !== 'full') { 
         const posicio = controPosicioRandom();
         acabat = guardarPosicio(posicio);
+      }else{
+        acabat = 'full'
       }
     }
   }
   torn++;
 
   // CONTROL SI LA MAQUINA HA GUANYAT
-  if (acabat === 'full') {
-    alert('EMPAT');
-    carregar();
-  } else if (acabat) {
-    alert('La maquina HA GUANYAT');
-    carregar();
+  if (acabat) {
+    setTimeout(()=>{
+      divGuanyar.classList.remove('hidden')
+      divGuanyar.querySelector('p').textContent = `La maquina HA GUANYAT`
+      carregar();
+    },300)
+    const number = document.getElementById('numJ2').textContent
+    document.getElementById('numJ2').innerText = Number(number)+1;
   }
+
 }
 
 function controlGuanyarHoritzontal(lletra) {
@@ -246,6 +271,7 @@ function controPosicioRandom() {
   let index1;
   let index2;
   let buit;
+
   do {
     index1 = Math.floor(Math.random() * 3);
     index2 = Math.floor(Math.random() * 3);
@@ -263,8 +289,13 @@ document.getElementById('canviarTorn').addEventListener('click', () => {
   document.getElementById('alert').classList.remove('hidden');
 });
 
-addEventListener('keypress', () => {
-  if (event.key === 'Enter') {
-    carregar();
-  }
-});
+
+document.getElementById('change').addEventListener('click', ()=>{
+  divGuanyar.classList.add('hidden')
+  document.getElementById('alert').classList.remove('hidden');
+})
+document.getElementById('tornaJugar').addEventListener('click', ()=>{
+  divGuanyar.classList.add('hidden')
+  carregar()
+  if(tornActual==='maquina') console.log('aaaaaa')
+})
